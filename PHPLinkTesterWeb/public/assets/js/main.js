@@ -26,13 +26,17 @@ document.addEventListener('DOMContentLoaded', function() {
   testProtocolSelect.addEventListener('change', function() {
     const selectedValue = this.value;
 
-    document.getElementById('testMethodSelectHttp').hidden = true
-    document.getElementById('testMethodSelectOthers').hidden = true
-
+    document.getElementById('testMethodSelectHttp').hidden = true;
+    document.getElementById('testInterfaceSelectHttp').hidden = true;
+    document.getElementById('testMethodSelectOthers').hidden = true;
+    document.getElementById('testInterfaceSelectOthers').hidden = true;
+    
     if (selectedValue === 'HTTP') {
-      document.getElementById('testMethodSelectHttp').hidden = false
+      document.getElementById('testMethodSelectHttp').hidden = false;
+      document.getElementById('testInterfaceSelectHttp').hidden = false;
     } else if (selectedValue === 'OTHERS') {
-        document.getElementById('testMethodSelectOthers').hidden = false
+        document.getElementById('testMethodSelectOthers').hidden = false;
+        document.getElementById('testInterfaceSelectOthers').hidden = false;
     } 
   });
 });

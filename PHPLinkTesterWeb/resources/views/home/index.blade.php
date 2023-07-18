@@ -14,7 +14,7 @@
                 <label>Test type</label>
             </div>
             <div id="simpleDiv">
-                <div class="input-field col s7">
+                <div class="input-field col s5">
                     <input type="text" id="link" class="autocomplete">
                     <label for="link">Link</label>
                 </div>
@@ -47,10 +47,23 @@
                         </select>
                     </div>
                 </div>
+                <div class="input-field col s2">
+                    <div id="testInterfaceSelectHttp">
+                        <select>
+                            <option value="CURL">Curl</option>
+                            <option value="GUZZLE">Guzzle</option>
+                        </select>
+                    </div>
+                    <div hidden id="testInterfaceSelectOthers">
+                        <select>
+                            <option value="FSOCK">fsock</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div id="multipleDiv1" class="input-field col s12" style="display: none;">
                 <textarea id="textarea1" class="materialize-textarea"></textarea>
-                <label for="textarea1">&lt;url&gt; &lt;port&gt; &lt;type&gt; &lt;method&gt;</label>
+                <label for="textarea1">&lt;url&gt;&nbsp;&lt;port&gt;&nbsp;&lt;type&gt;&nbsp;&lt;method&gt;&nbsp;&lt;interface&gt;</label>
             </div>
             <div id="multipleDiv2" class="input-field col s12" style="display: none;">
                 <label for="autocomplete-input">Search - Multiple form 2</label>
