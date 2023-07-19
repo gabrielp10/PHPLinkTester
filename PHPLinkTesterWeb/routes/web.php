@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'LinkController@index');
+Route::post('/linkRequest', 'LinkController@LinkRequest');
 

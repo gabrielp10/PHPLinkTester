@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+
+  const form = document.querySelector('form');
   const testTypeSelect = document.getElementById('testTypeSelect');
   const testProtocolSelect = document.getElementById('testProtocolSelect');
 
@@ -38,5 +40,27 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('testMethodSelectOthers').hidden = false;
         document.getElementById('testInterfaceSelectOthers').hidden = false;
     } 
+  });
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const request = new XMLHttpRequest();
+
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                const response = request.responseText;
+                document.getElementById('linkOutput').value = response;
+            } else {
+              console.log(request.responseText);
+                alert('Submit request error');
+            }
+        }
+    };
+
+    request.open('POST', '/linkRequest');
+    request.send(formData);
   });
 });
