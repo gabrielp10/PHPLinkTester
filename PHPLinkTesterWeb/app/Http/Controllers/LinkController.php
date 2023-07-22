@@ -23,21 +23,58 @@ class LinkController extends Controller
 
     public function LinkRequest(Request $request)
     {
+      $type = $request->testTypeSelect;
+
+      switch($type) {
+        case 1:
+          return $this->SimpleRequest($request);
+        case 2:
+          return $this->multipleRequest1($request->linkInput);
+      }
+    }
+
+    private function SimpleRequest(Request $request)
+    {
       $methodHandler = $this->methodHandler()[$request->testProtocolSelect];
       $methodHandler = $request->$methodHandler;
       
       $interfaceHandler = $this->interfaceHandler()[$request->testProtocolSelect];
       $interfaceHandler = $request->$interfaceHandler;
       
-      $linkType = $this->LinkProtocolHandler($request->testProtocolSelect);
-      $linkIRepository = $this->LinkRepositoryHandler($request->testProtocolSelect, $interfaceHandler);
+      return $this->doRequest (
+        $request->link, $request->port, 
+        $request->testProtocolSelect, 
+        $methodHandler, $interfaceHandler
+      );
+    }
+
+    private function multipleRequest1(string $linkInput)
+    {
+      $lines = explode(PHP_EOL, $linkInput);
+      $array = array();
+      foreach ($lines as $line) {
+          $array[] = str_getcsv($line, ';');
+      }
+
+      $requestResult = [];
+
+      foreach ($array as $newRequest) {
+        echo $this->doRequest (
+          $newRequest[0], $newRequest[1], $newRequest[2], $newRequest[3], $newRequest[4] ) . PHP_EOL;
+      }
+    }
+
+    private function doRequest($link, $port, $type, $method, $interface): string
+    {      
+      $linkType = $this->LinkProtocolHandler($type);
+      $linkIRepository = $this->LinkRepositoryHandler($type, $interface);
       
-      $linkDto = new RequestDto($request->link, $request->port, $methodHandler);
+      $linkDto = new RequestDto($link, $port, $method);
   
       $useCase = new ValidateLinkCode($linkIRepository, $linkType);
       $result = $useCase->execute($linkDto);
   
-      return "Link: $request->link Code: ".$result->getCode();
+      return "Link: $link Code: ".$result->getCode();
     }
 
     private function LinkProtocolHandler(string $method)

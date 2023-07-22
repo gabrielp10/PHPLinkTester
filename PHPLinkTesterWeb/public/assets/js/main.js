@@ -64,3 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
     request.send(formData);
   });
 });
+
+function copyOutput() {
+  const outputData = document.getElementById('linkOutput').value;
+  navigator.clipboard.writeText(outputData);
+}

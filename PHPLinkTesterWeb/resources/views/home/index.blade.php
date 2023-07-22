@@ -69,8 +69,8 @@
                     </div>
                 </div>
                 <div id="multipleDiv1" class="input-field col s12" style="display: none;">
-                    <textarea id="textarea1" class="materialize-textarea"></textarea>
-                    <label for="textarea1">&lt;url&gt;&nbsp;&lt;port&gt;&nbsp;&lt;type&gt;&nbsp;&lt;method&gt;&nbsp;&lt;interface&gt;</label>
+                    <textarea id="textarea1" name="linkInput" class="materialize-textarea"></textarea>
+                    <label for="textarea1">&lt;url&gt;;&lt;port&gt;;&lt;type&gt;;&lt;method&gt;;&lt;interface&gt;</label> 
                 </div>
                 <div id="multipleDiv2" class="input-field col s12" style="display: none;">
                     <label for="autocomplete-input">Search - Multiple form 2</label>
@@ -81,6 +81,9 @@
             <div>
                 <label for="linkOutput">Output</label>
                 <textarea disabled id="linkOutput" class="materialize-textarea"></textarea>
+                <button class="btn waves-effect waves-light" onclick="copyOutput()">
+                    Copy
+                </button> 
             </div>
         </div>
     </div>
