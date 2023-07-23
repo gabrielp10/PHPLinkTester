@@ -54,8 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const response = request.responseText;
                 document.getElementById('linkOutput').value = response;
             } else {
-              console.log(request.responseText);
-                alert('Submit request error');
+                alert('Submit request error, check your syntax');
             }
         }
     };

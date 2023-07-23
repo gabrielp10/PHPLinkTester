@@ -17,7 +17,6 @@
                 <div class="col s2">
                     <button class="btn waves-effect waves-light" type="submit">
                         Submit
-                        <i class="material-icons">send</i>
                     </button>            
                 </div>
                 <div id="simpleDiv">
