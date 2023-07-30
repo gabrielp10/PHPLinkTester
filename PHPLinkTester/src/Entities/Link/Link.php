@@ -8,9 +8,9 @@ final class Link implements Stringable
 {
   private string $link;
 
-  public function __construct($links)
+  public function __construct($link)
   {
-    $this->validateLink($links);
+    $this->validateLink($link);
   }
 
   public function validateLink($link): void
