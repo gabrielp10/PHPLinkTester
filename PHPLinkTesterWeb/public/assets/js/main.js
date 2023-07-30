@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   form.addEventListener('submit', function(event) {
     event.preventDefault();
+    document.getElementById('linkOutput').value = 'Loading...';
 
     const formData = new FormData(form);
     const request = new XMLHttpRequest();
@@ -55,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('linkOutput').value = response;
             } else {
                 alert('Submit request error, check your syntax');
+                document.getElementById('linkOutput').value = '';
             }
         }
     };
