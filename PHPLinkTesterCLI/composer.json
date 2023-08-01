@@ -1,7 +1,8 @@
 {
     "autoload": {
         "psr-4": {
-            "PHPLinkTester\\": "../PHPLinkTester/src"
+            "PHPLinkTester\\": "../PHPLinkTester/src",
+            "PHPLinkTesterCLI\\": "src/"
         }
     },
     "require": {}

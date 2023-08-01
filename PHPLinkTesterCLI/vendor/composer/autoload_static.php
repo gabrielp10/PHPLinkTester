@@ -10,6 +10,7 @@ class ComposerStaticInit9cee3bce053c5a5f5f7603217ac0b1e0
         'P' => 
         array (
             'PHPLinkTester\\' => 14,
+            'PHPLinkTesterCLI\\' => 17,
         ),
     );
 
@@ -17,6 +18,10 @@ class ComposerStaticInit9cee3bce053c5a5f5f7603217ac0b1e0
         'PHPLinkTester\\' => 
         array (
             0 => __DIR__ . '/../..' . '/../PHPLinkTester/src',
+        ),
+        'PHPLinkTesterCLI\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 

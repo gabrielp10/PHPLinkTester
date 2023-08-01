@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'PHPLinkTester\\' => array($baseDir . '/../PHPLinkTester/src'),
+    'PHPLinkTesterCLI\\' => array($baseDir . '/src'),
 );
