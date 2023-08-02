@@ -3,12 +3,12 @@
 namespace PHPLinkTester\Entities\Request;
 
 
-class HttpRequest extends RequestTypeProtocol
+class OtherRequest extends RequestTypeProtocol
 {
   public function isAValidProtocol(string $protocol): array
   {
     $types = [
-      'GET', 'POST', 'PATCH', 'PUT', 'DELETE'
+      'SSH', 'FTP', 'SMTP', 'POP3', 'IMAP'
     ];
 
     if (in_array($protocol, $types)) {

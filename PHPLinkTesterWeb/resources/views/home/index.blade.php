@@ -69,7 +69,7 @@
                 </div>
                 <div id="multipleDiv1" class="input-field col s12" style="display: none;">
                     <textarea id="textarea1" name="linkInput" class="materialize-textarea"></textarea>
-                    <label for="textarea1">&lt;url&gt;;&lt;port&gt;;&lt;type&gt;;&lt;method&gt;;&lt;interface&gt;</label> 
+                    <label for="textarea1">&lt;url&gt;;&lt;port&gt;;&lt;method&gt;;&lt;interface&gt;</label> 
                 </div>
                 <div id="multipleDiv2" class="input-field col s12" style="display: none;">
                     <label for="autocomplete-input">Search - Multiple form 2</label>

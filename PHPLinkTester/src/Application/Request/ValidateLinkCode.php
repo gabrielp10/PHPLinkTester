@@ -2,33 +2,31 @@
 
 namespace PHPLinkTester\Application\Request;
 
+use DomainException;
 use PHPLinkTester\Entities\Request\Request;
 use PHPLinkTester\Entities\Request\RequestRepository;
-use PHPLinkTester\Entities\Request\RequestTypeRepository;
+use PHPLinkTester\Entities\Request\RequestHandler;
 use PHPLinkTester\Entities\Response\RequestResponse;
 
 class ValidateLinkCode
 {
-  public function __construct(
-    private RequestRepository $requestRepository,
-    private RequestTypeRepository $RequestTypeRepository  
-  ) { }
+  public function __construct (private RequestRepository $requestRepository) { }
 
   public function execute(RequestDto $requestData): RequestResponse
   {
     $request = Request::LinkPort (
       $requestData->link, 
-      $requestData->port
+      $requestData->port,
     );
 
-    if (!$this->RequestTypeRepository->isAValidRequest($requestData->requestType)) {
-      $className = get_class($this->RequestTypeRepository);
-        throw new \InvalidArgumentException (
-          "Invalid request type: '$requestData->requestType' for class $className" );
+    $RequestHandler = new RequestHandler;
+    $findRequestMethod = $RequestHandler->RequestHandle($requestData->protocol);
+
+    if (empty($findRequestMethod['type'])) {
+      throw new DomainException("Invalid request method: '$requestData->protocol'");
     }
 
-    $request->setRequestType($requestData->requestType);
-
+    $request->setRequestType($requestData->protocol);
     return $this->requestRepository->queryCode($request);
   }
 }

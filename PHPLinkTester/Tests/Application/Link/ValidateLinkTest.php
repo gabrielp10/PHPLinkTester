@@ -6,7 +6,7 @@ use PHPLinkTester\Application\Request\ValidateLinkCode;
 use PHPLinkTester\Infrastructure\Link\LinkRepositoryCurl;
 use PHPLinkTester\Application\Request\RequestDto;
 use PHPLinkTester\Entities\Request\HttpRequest;
-use PHPLinkTester\Entities\Request\ProtocolRequest;
+use PHPLinkTester\Entities\Request\OtherRequest;
 use PHPLinkTester\Infrastructure\Link\LinkRepositoryfsock;
 use PHPUnit\Framework\TestCase;
 
@@ -17,9 +17,8 @@ class ValidateLinkTest extends TestCase
     $requestDto = new RequestDto('https://www.google.com', '443', 'GET');
 
     $requestRepository = new LinkRepositoryCurl();
-    $requestTypeRepository = new HttpRequest();
 
-    $useCase = new ValidateLinkCode($requestRepository, $requestTypeRepository);
+    $useCase = new ValidateLinkCode($requestRepository);
     $code = $useCase->execute($requestDto);
     $this->assertSame('200', (string) $code->getCode());
   }
@@ -29,9 +28,8 @@ class ValidateLinkTest extends TestCase
     $requestDto = new RequestDto('test.rebex.net:22', '443', 'SSH');
 
     $requestRepository = new LinkRepositoryfsock();
-    $requestTypeRepository = new ProtocolRequest();
 
-    $useCase = new ValidateLinkCode($requestRepository, $requestTypeRepository);
+    $useCase = new ValidateLinkCode($requestRepository);
     $code = $useCase->execute($requestDto);
     $this->assertSame('1', (string) $code->getCode());
   }

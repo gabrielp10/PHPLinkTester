@@ -12,7 +12,7 @@ abstract class RequestType implements Stringable
   {
     $this->request = NULL;
 
-    if($this->isAValidRequest($request))
+    if($this->isAValidProtocol($request))
     {
       $this->request = $request;
     }
@@ -23,5 +23,5 @@ abstract class RequestType implements Stringable
     return $this->request;  
   }
 
-  abstract public function isAValidRequest($request): bool;
+  abstract public function isAValidProtocol($request): bool;
 }

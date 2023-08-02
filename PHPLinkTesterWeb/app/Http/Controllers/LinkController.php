@@ -41,11 +41,7 @@ class LinkController extends Controller
       $interfaceHandler = $this->interfaceHandler()[$request->testProtocolSelect];
       $interfaceHandler = $request->$interfaceHandler;
       
-      return $this->doRequest (
-        $request->link, $request->port, 
-        $request->testProtocolSelect, 
-        $methodHandler, $interfaceHandler
-      );
+      return $this->doRequest ($request->link, $request->port, $methodHandler, $interfaceHandler);
     }
 
     private function multipleRequest1(string $linkInput)
@@ -56,42 +52,33 @@ class LinkController extends Controller
           $array[] = str_getcsv($line, ';');
       }
 
-      $requestResult = [];
-
       foreach ($array as $newRequest) {
         echo $this->doRequest (
-          $newRequest[0], $newRequest[1], $newRequest[2], $newRequest[3], $newRequest[4] ) . PHP_EOL;
+          $newRequest[0], $newRequest[1], $newRequest[2], $newRequest[3] ) . PHP_EOL;
       }
     }
 
-    private function doRequest($link, $port, $type, $method, $interface): string
+    private function doRequest($link, $port, $method, $interface): string
     {      
-      $linkType = $this->LinkProtocolHandler($type);
-      $linkIRepository = $this->LinkRepositoryHandler($type, $interface);
+      $linkIRepository = $this->LinkRepositoryHandler($method, $interface);
       
       $linkDto = new RequestDto($link, $port, $method);
   
-      $useCase = new ValidateLinkCode($linkIRepository, $linkType);
+      $useCase = new ValidateLinkCode($linkIRepository);
       $result = $useCase->execute($linkDto);
   
       return "Link: $link Code: ".$result->getCode();
     }
 
-    private function LinkProtocolHandler(string $method)
+    private function LinkRepositoryHandler(string $method, string $interface)
     {
-      $linkChain = new WebHttpRequest (new WebOthersRequest(new WebRequestNotFound()));
-      return $linkChain->validateRequestType($method);
-    }
-
-    private function LinkRepositoryHandler(string $interface, string $method)
-    {
-      if ($interface == 'HTTP') {
+      if (in_array($method, ['GET', 'POST'])) {
         $interfaceChain = new WebCurlInterface(new WebGuzzleInterface(new WebInterfaceNotFound()));
-        return $interfaceChain->validateInterfaceType($method);
+        return $interfaceChain->validateInterfaceType($interface);
       }
 
       $interfaceChain = new WebFsockInterface(new WebInterfaceNotFound());
-      return $interfaceChain->validateInterfaceType($method);
+      return $interfaceChain->validateInterfaceType($interface);
     }
 
     private function methodHandler(): array

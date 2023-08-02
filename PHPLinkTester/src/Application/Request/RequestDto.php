@@ -7,6 +7,6 @@ class RequestDto
     public function __construct (
         public string $link, 
         public string $port, 
-        public string $requestType
+        public string $protocol
     ) { }
 }
