@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Protocol\{WebHttpRequest, WebOthersRequest, WebRequestNotFound};
 use App\Http\Controllers\Interface\Http\{WebCurlInterface, WebGuzzleInterface};
 use App\Http\Controllers\Interface\Others\WebFsockInterface;
 use App\Http\Controllers\Interface\WebInterfaceNotFound;
@@ -16,6 +15,9 @@ class LinkController extends Controller
      *
      * @return void
      */
+
+    private string $protocol;
+
     public function index()
     {
       return view('home.index');
@@ -24,6 +26,7 @@ class LinkController extends Controller
     public function LinkRequest(Request $request)
     {
       $type = $request->testTypeSelect;
+      $this->protocol = $request->testProtocolSelect;
 
       switch($type) {
         case 1:
@@ -35,10 +38,10 @@ class LinkController extends Controller
 
     private function SimpleRequest(Request $request)
     {
-      $methodHandler = $this->methodHandler()[$request->testProtocolSelect];
+      $methodHandler = $this->methodHandler()[$this->protocol];
       $methodHandler = $request->$methodHandler;
       
-      $interfaceHandler = $this->interfaceHandler()[$request->testProtocolSelect];
+      $interfaceHandler = $this->interfaceHandler()[$this->protocol];
       $interfaceHandler = $request->$interfaceHandler;
       
       return $this->doRequest ($request->link, $request->port, $methodHandler, $interfaceHandler);
@@ -60,19 +63,19 @@ class LinkController extends Controller
 
     private function doRequest($link, $port, $method, $interface): string
     {      
-      $linkIRepository = $this->LinkRepositoryHandler($method, $interface);
+      $linkIRepository = $this->LinkRepositoryHandler($interface);
       
       $linkDto = new RequestDto($link, $port, $method);
   
       $useCase = new ValidateLinkCode($linkIRepository);
       $result = $useCase->execute($linkDto);
   
-      return "Link: $link Code: ".$result->getCode();
+      return "$link;".$result->getCode();
     }
 
-    private function LinkRepositoryHandler(string $method, string $interface)
+    private function LinkRepositoryHandler(string $interface)
     {
-      if (in_array($method, ['GET', 'POST'])) {
+      if ($this->protocol = 'HTTP') {
         $interfaceChain = new WebCurlInterface(new WebGuzzleInterface(new WebInterfaceNotFound()));
         return $interfaceChain->validateInterfaceType($interface);
       }
